@@ -2,6 +2,7 @@
 
 ## model
 * MF
+
     class MF(nn.Module):
         def __init__(self, num_factors, num_users, num_items, **kwargs):
             super().__init__()
@@ -34,6 +35,7 @@
 
             return outputs
 * BPR
+
     class BPR(nn.Module):
         def __init__(self, user_size, item_size, dim, weight_decay):
             super().__init__()
