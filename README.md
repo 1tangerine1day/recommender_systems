@@ -7,7 +7,7 @@
 * MF
 
         class MF(nn.Module):
-        def __init__(self, num_factors, num_users, num_items, **kwargs):
+        def __init__(self, num_factors, num_users, num_items):
             super().__init__()
             self.P = nn.Embedding(num_users, num_factors)
             self.Q = nn.Embedding(num_items, num_factors)
