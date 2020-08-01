@@ -3,7 +3,7 @@
 ## model
 * MF
 
-    class MF(nn.Module):
+        class MF(nn.Module):
         def __init__(self, num_factors, num_users, num_items, **kwargs):
             super().__init__()
             self.P = nn.Embedding(num_users, num_factors)
@@ -34,36 +34,37 @@
             outputs =  outputs.flatten()
 
             return outputs
+            
 * BPR
 
-    class BPR(nn.Module):
-        def __init__(self, user_size, item_size, dim, weight_decay):
-            super().__init__()
+        class BPR(nn.Module):
+            def __init__(self, user_size, item_size, dim, weight_decay):
+                super().__init__()
 
-            self.W = nn.Parameter(torch.empty(user_size, dim))
-            self.H = nn.Parameter(torch.empty(item_size, dim))
-            nn.init.xavier_normal_(self.W.data)
-            nn.init.xavier_normal_(self.H.data)
-            self.weight_decay = weight_decay
+                self.W = nn.Parameter(torch.empty(user_size, dim))
+                self.H = nn.Parameter(torch.empty(item_size, dim))
+                nn.init.xavier_normal_(self.W.data)
+                nn.init.xavier_normal_(self.H.data)
+                self.weight_decay = weight_decay
 
-        def forward(self, u, i, j):
+            def forward(self, u, i, j):
 
-            u = self.W[u, :]
-            i = self.H[i, :]
-            j = self.H[j, :]
-            x_ui = torch.mul(u, i).sum(dim=1)
-            x_uj = torch.mul(u, j).sum(dim=1)
-            x_uij = x_ui - x_uj
-            log_prob = F.logsigmoid(x_uij).sum()
-            regularization = self.weight_decay * (u.norm(dim=1).pow(2).sum() + i.norm(dim=1).pow(2).sum() + j.norm(dim=1).pow(2).sum())
-            return -log_prob + regularization
+                u = self.W[u, :]
+                i = self.H[i, :]
+                j = self.H[j, :]
+                x_ui = torch.mul(u, i).sum(dim=1)
+                x_uj = torch.mul(u, j).sum(dim=1)
+                x_uij = x_ui - x_uj
+                log_prob = F.logsigmoid(x_uij).sum()
+                regularization = self.weight_decay * (u.norm(dim=1).pow(2).sum() + i.norm(dim=1).pow(2).sum() + j.norm(dim=1).pow(2).sum())
+                return -log_prob + regularization
 
-        def recommend(self, u):
+            def recommend(self, u):
 
-            u = self.W[u, :]
-            x_ui = torch.mm(u, self.H.t())
-            pred = torch.argsort(x_ui, dim=1)
-            return pred
+                u = self.W[u, :]
+                x_ui = torch.mm(u, self.H.t())
+                pred = torch.argsort(x_ui, dim=1)
+                return pred
 ## data
 
 MovieLens 100K Dataset : https://grouplens.org/datasets/movielens/
