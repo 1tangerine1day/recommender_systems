@@ -1,4 +1,7 @@
 # recommender systems algorithm
+* Matrix Factorization
+* Bayesian Personalized Ranking
+
 
 ## model
 * MF
