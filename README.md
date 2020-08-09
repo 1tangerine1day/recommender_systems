@@ -1,6 +1,7 @@
 # recommender systems algorithm
 * Matrix Factorization
 * Bayesian Personalized Ranking
+* Deep Factorization Machines
 
 
 ## model
